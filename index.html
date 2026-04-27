@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClearPath Financial Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:      #1a2e25;
+      --paper:    #c9e4d1;
+      --deep:     #52796f;
+      --deep-dk:  #3d5c55;
+      --accent-lt:#7aab9e;
+      --mist:     #b0d4bc;
+      --mid:      #4a6b5e;
+      --white:    #ffffff;
+      --serif:    'Cormorant Garamond', Georgia, serif;
+      --sans:     'DM Sans', sans-serif;
+      --max:      1200px;
+      --ease:     cubic-bezier(.25, .46, .45, .94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    img { display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 3rem;
+      background: rgba(201,228,209,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s var(--ease), background .3s var(--ease);
+    }
+    nav.scrolled { border-color: var(--mist); background: rgba(201,228,209,0.97); }
+    .nav-logo img { height: 60px; width: auto; }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); transition: color .25s; }
+    .nav-links a:hover { color: var(--deep); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: grid; place-items: center;
+      padding: 10rem 3rem 6rem; text-align: center;
+      position: relative; overflow: hidden; background: var(--paper);
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(var(--mist) 1px,transparent 1px), linear-gradient(90deg,var(--mist) 1px,transparent 1px);
+      background-size: 60px 60px; opacity: .35; pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, var(--paper) 100%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 820px; }
+    .hero-logo { margin-inline: auto; margin-bottom: 2rem; width: 200px; animation: fadeUp .8s var(--ease) both; filter: drop-shadow(0 4px 24px rgba(82,121,111,.15)); }
+    .hero-eyebrow {
+      display: inline-block; font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--deep); border: 1px solid var(--accent-lt); padding: .35rem 1rem;
+      border-radius: 2rem; margin-bottom: 2rem; animation: fadeUp .8s .05s var(--ease) both;
+    }
+    .hero h1 {
+      font-family: var(--serif); font-size: clamp(3.2rem,8vw,7.2rem); font-weight: 300;
+      line-height: 1.05; letter-spacing: -.01em; color: var(--ink);
+      animation: fadeUp .9s .1s var(--ease) both;
+    }
+    .hero h1 em { font-style: italic; color: var(--deep); }
+    .hero-tagline {
+      margin-top: 1.8rem; font-size: clamp(1rem,2vw,1.2rem); color: var(--mid);
+      font-weight: 300; max-width: 520px; margin-inline: auto;
+      animation: fadeUp .9s .2s var(--ease) both;
+    }
+    .hero-cta { margin-top: 3rem; display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; animation: fadeUp .9s .3s var(--ease) both; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .85rem 2.2rem; border-radius: 3px; font-family: var(--sans);
+      font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer; transition: all .28s var(--ease); border: none;
+    }
+    .btn-primary { background: var(--deep); color: var(--white); }
+    .btn-primary:hover { background: var(--ink); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--deep); }
+    .btn-outline:hover { background: var(--deep); color: var(--white); transform: translateY(-2px); }
+
+    /* SECTIONS */
+    section { padding: 7rem 3rem; }
+    .section-label { font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--deep); margin-bottom: 1rem; }
+    .section-heading { font-family: var(--serif); font-size: clamp(2.2rem,5vw,3.8rem); font-weight: 300; line-height: 1.1; color: var(--ink); }
+    .section-heading em { font-style: italic; color: var(--deep); }
+    .container { max-width: var(--max); margin-inline: auto; }
+
+    .divider { height: 1px; background: linear-gradient(90deg,transparent,var(--mist) 30%,var(--accent-lt) 50%,var(--mist) 70%,transparent); margin: 0 3rem; width: calc(100% - 6rem); }
+
+    /* ABOUT */
+    .about { background: var(--paper); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; max-width: var(--max); margin-inline: auto; }
+    .about-visual { position: relative; }
+    .about-img-wrap { aspect-ratio: 4/5; background: var(--mist); border-radius: 2px; overflow: hidden; position: relative; }
+    .about-img-wrap::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg,#b0d4bc,#6a9e90); }
+    .about-img-wrap::after { content: 'ClearPath'; position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--serif); font-size: 1.6rem; font-weight: 300; letter-spacing: .2em; color: rgba(255,255,255,.4); }
+    .about-accent { position: absolute; bottom: -1.5rem; right: -1.5rem; width: 60%; aspect-ratio: 1; background: var(--deep); opacity: .08; border-radius: 50%; z-index: -1; }
+    .stat-row { display: flex; gap: 2.5rem; margin-top: 2.5rem; }
+    .stat h3 { font-family: var(--serif); font-size: 2.8rem; font-weight: 300; color: var(--deep); line-height: 1; }
+    .stat p { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); margin-top: .3rem; }
+    .about-text { color: var(--mid); font-size: .98rem; }
+    .about-text p + p { margin-top: 1.2rem; }
+
+    /* SERVICES */
+    .services { background: var(--deep); color: var(--white); }
+    .services .section-heading { color: var(--white); }
+    .services .section-label { color: var(--accent-lt); }
+    .services-header { max-width: var(--max); margin-inline: auto; display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; margin-bottom: 4rem; flex-wrap: wrap; }
+    .services-intro { max-width: 380px; color: rgba(255,255,255,.6); font-size: .95rem; }
+    .services-grid { max-width: var(--max); margin-inline: auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.1); }
+    .service-card { background: var(--deep); padding: 2.8rem 2.2rem; transition: background .3s var(--ease); cursor: default; }
+    .service-card:hover { background: var(--deep-dk); }
+    .service-num { font-family: var(--serif); font-size: 3rem; font-weight: 300; color: rgba(255,255,255,.1); line-height: 1; margin-bottom: 1.5rem; }
+    .service-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--white); margin-bottom: .8rem; }
+    .service-card p { font-size: .88rem; color: rgba(255,255,255,.5); line-height: 1.75; }
+    .service-line { width: 32px; height: 2px; background: var(--paper); margin-bottom: 1.4rem; opacity: .5; }
+
+    /* ── MORTGAGE CALCULATOR ─────────────────────────────── */
+    .calculator { background: var(--paper); }
+    .calc-wrap {
+      max-width: var(--max); margin-inline: auto;
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start;
+    }
+    .calc-box {
+      background: var(--white); border-radius: 4px;
+      padding: 2.8rem 2.6rem;
+      box-shadow: 0 4px 40px rgba(26,46,37,.08);
+    }
+    .calc-box h3 {
+      font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
+      color: var(--ink); margin-bottom: 2rem;
+    }
+    .calc-field { margin-bottom: 1.4rem; }
+    .calc-field label {
+      display: flex; justify-content: space-between;
+      font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: .5rem;
+    }
+    .calc-field label span { color: var(--deep); font-weight: 500; font-size: .8rem; letter-spacing: 0; text-transform: none; }
+    .calc-field input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 4px; border-radius: 2px;
+      background: var(--mist); outline: none; cursor: pointer;
+    }
+    .calc-field input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--deep); cursor: pointer;
+      box-shadow: 0 2px 8px rgba(82,121,111,.35);
+      transition: transform .2s var(--ease);
+    }
+    .calc-field input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    .calc-field input[type="number"] {
+      width: 100%; padding: .75rem 1rem;
+      border: 1px solid var(--mist); border-radius: 2px;
+      font-family: var(--sans); font-size: .95rem; color: var(--ink);
+      background: var(--paper); outline: none;
+      transition: border-color .25s var(--ease);
+    }
+    .calc-field input[type="number"]:focus { border-color: var(--deep); }
+    .calc-field select {
+      width: 100%; padding: .75rem 1rem;
+      border: 1px solid var(--mist); border-radius: 2px;
+      font-family: var(--sans); font-size: .95rem; color: var(--ink);
+      background: var(--paper); outline: none; -webkit-appearance: none; cursor: pointer;
+    }
+    .calc-tabs { display: flex; gap: .5rem; margin-bottom: 2rem; }
+    .calc-tab {
+      flex: 1; padding: .6rem; border: 1px solid var(--mist);
+      border-radius: 3px; font-size: .75rem; letter-spacing: .08em;
+      text-transform: uppercase; cursor: pointer; background: transparent;
+      color: var(--mid); font-family: var(--sans);
+      transition: all .25s var(--ease);
+    }
+    .calc-tab.active { background: var(--deep); color: var(--white); border-color: var(--deep); }
+
+    /* Results panel */
+    .calc-result {
+      background: var(--deep); color: var(--white);
+      border-radius: 4px; padding: 2.6rem 2.4rem;
+      position: sticky; top: 100px;
+    }
+    .calc-result h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; color: rgba(255,255,255,.7); margin-bottom: 2rem; }
+    .result-main { margin-bottom: 2rem; }
+    .result-main .label { font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: .4rem; }
+    .result-main .amount {
+      font-family: var(--serif); font-size: clamp(2.4rem,5vw,3.6rem);
+      font-weight: 300; color: var(--white); line-height: 1;
+    }
+    .result-main .freq { font-size: .8rem; color: rgba(255,255,255,.5); margin-top: .3rem; }
+    .result-breakdown { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+    .result-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .result-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .result-row .r-label { font-size: .8rem; color: rgba(255,255,255,.55); }
+    .result-row .r-val { font-family: var(--serif); font-size: 1.1rem; color: var(--white); }
+
+    /* Doughnut chart */
+    .chart-wrap { position: relative; width: 140px; height: 140px; margin: 0 auto 1.8rem; }
+    .chart-wrap svg { transform: rotate(-90deg); }
+    .chart-center {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .chart-center .pct { font-family: var(--serif); font-size: 1.5rem; color: var(--white); }
+    .chart-center .sub { font-size: .65rem; color: rgba(255,255,255,.5); letter-spacing: .08em; }
+    .chart-legend { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: .4rem; font-size: .72rem; color: rgba(255,255,255,.6); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    .calc-cta { margin-top: 2rem; }
+    .calc-cta a { display: block; text-align: center; background: var(--paper); color: var(--ink); padding: .9rem; border-radius: 3px; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; transition: all .25s var(--ease); }
+    .calc-cta a:hover { background: var(--white); }
+
+    /* TESTIMONIALS */
+    .testimonials { background: var(--mist); padding: 6rem 3rem; }
+    .testimonials .container { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
+    .test-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+    .test-card { background: var(--paper); padding: 2rem 2rem 1.6rem; border-radius: 2px; border-left: 3px solid var(--deep); transition: transform .3s var(--ease); }
+    .test-card:hover { transform: translateX(4px); }
+    .test-card blockquote { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--ink); line-height: 1.6; margin-bottom: 1.2rem; }
+    .test-author { display: flex; align-items: center; gap: 1rem; }
+    .test-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--mist); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: .9rem; color: var(--deep); border: 1px solid var(--deep); }
+    .test-name { font-size: .82rem; font-weight: 500; color: var(--ink); }
+    .test-role { font-size: .72rem; color: var(--mid); letter-spacing: .06em; }
+
+    /* CONTACT */
+    .contact { background: var(--paper); }
+    .contact-grid { max-width: var(--max); margin-inline: auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; }
+    .contact-info-text { color: var(--mid); font-size: .96rem; margin-top: 1.5rem; max-width: 320px; }
+    .contact-details { margin-top: 2.8rem; display: flex; flex-direction: column; gap: 1.4rem; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 1rem; }
+    .contact-detail-icon { width: 38px; height: 38px; border: 1px solid var(--mist); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--deep); }
+    .contact-detail-text strong { display: block; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); font-weight: 400; }
+    .contact-detail-text span { font-size: .95rem; color: var(--ink); }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .field { display: flex; flex-direction: column; gap: .4rem; }
+    .field label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); }
+    .field input, .field select, .field textarea {
+      background: var(--white); border: 1px solid var(--mist); border-radius: 2px;
+      padding: .85rem 1rem; font-family: var(--sans); font-size: .92rem; font-weight: 300;
+      color: var(--ink); transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+      outline: none; width: 100%; -webkit-appearance: none;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--deep); box-shadow: 0 0 0 3px rgba(82,121,111,.12); }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .form-submit { margin-top: .5rem; display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+    .btn-submit { background: var(--deep); color: var(--white); padding: .95rem 2.8rem; border: none; border-radius: 3px; font-family: var(--sans); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: all .28s var(--ease); }
+    .btn-submit:hover { background: var(--ink); transform: translateY(-2px); }
+    .form-note { font-size: .75rem; color: var(--mid); }
+
+    /* FOOTER */
+    footer { background: var(--ink); color: rgba(255,255,255,.4); padding: 2.5rem 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem; }
+    footer .footer-logo img { height: 50px; width: auto; }
+    footer p { font-size: .78rem; }
+    .footer-links { display: flex; gap: 1.8rem; list-style: none; }
+    .footer-links a { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; transition: color .25s; }
+    .footer-links a:hover { color: var(--paper); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity:0; transform:translateY(30px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width:1024px) {
+      .services-grid { grid-template-columns: repeat(2,1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { max-width: 440px; }
+      .testimonials .container { grid-template-columns: 1fr; gap: 3rem; }
+      .calc-wrap { grid-template-columns: 1fr; gap: 3rem; }
+      .calc-result { position: static; }
+    }
+    @media (max-width:768px) {
+      nav { padding: .7rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .hero { padding: 9rem 1.5rem 5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .services-header { flex-direction: column; align-items: flex-start; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+      .divider { margin: 0 1.5rem; width: calc(100% - 3rem); }
+      .stat-row { gap: 1.5rem; }
+    }
+    @media (max-width:480px) {
+      .hero h1 { font-size: 2.8rem; }
+      .hero-logo { width: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo"><img src="data:image/png;base64,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" alt="ClearPath Financial Solutions" /></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#calculator">Calculator</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div class="hero-brand" style="margin-bottom:2rem;animation:fadeUp .8s var(--ease) both;">
+        <span style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;color:var(--ink);letter-spacing:.02em;">ClearPath Financial Solution</span>
+      </div>
+      <h1>CLEAR PATH TO<br><em>BETTER LOANS</em></h1>
+      <p class="hero-tagline">We simplify the loan application process, guiding you with clarity and confidence to secure the right solution for your life and goals.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Start a Conversation</a>
+        <a href="#calculator" class="btn btn-outline">Mortgage Calculator</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-img-wrap"></div>
+        <div class="about-accent"></div>
+      </div>
+      <div class="reveal" style="transition-delay:.15s">
+        <p class="section-label">About ClearPath</p>
+        <h2 class="section-heading">Clarity is our<br><em>founding principle.</em></h2>
+        <div class="about-text" style="margin-top:1.6rem">
+          <p>At ClearPath Financial Solutions, clarity is our founding principle. In a world where finance can feel overwhelming and filled with jargon, we exist to simplify the journey and give you confidence in every decision you make.</p>
+          <p>We combine deep expertise with plain language, ensuring you fully understand your options without the confusion. Whether you're exploring a home loan, refinancing for a better deal, purchasing a vehicle, funding a personal goal, or structuring commercial and asset finance, we guide you with transparency and purpose.</p>
+          <p>Our approach is simple but powerful. We listen first, then build strategies that reflect your values and long-term vision. Every client's situation is different, and we take the time to understand yours, so the solutions we provide are not just suitable for today, but sustainable for the future.</p>
+          <p>At ClearPath, we're more than brokers. We are partners in your financial journey. From your first home to growing your business, we stand beside you with honest advice, tailored solutions, and a commitment to helping you move forward with clarity and confidence.</p>
+          <p style="font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--deep);margin-top:1.6rem;">Because when the path is clear, better decisions follow.</p>
+        </div>
+
+        <div style="margin-top:2.5rem"><a href="#contact" class="btn btn-primary">Meet Our Team</a></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services-header reveal">
+      <div>
+        <p class="section-label">What We Offer</p>
+        <h2 class="section-heading">Expertise across<br>every dimension of<br><em>your finances.</em></h2>
+      </div>
+      <p class="services-intro">We don't believe in one-size-fits-all. Each service is tailored to your situation, goals, and timeline.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal"><div class="service-num">01</div><div class="service-line"></div><h3>Refinancing</h3><p>Unlock a better deal on your existing loan. We review your current arrangement and find solutions that save you money and improve your financial position.</p></div>
+      <div class="service-card reveal" style="transition-delay:.1s"><div class="service-num">02</div><div class="service-line"></div><h3>Home Loan</h3><p>From first home buyers to seasoned investors, we guide you through every step of the home loan process with clarity, confidence, and the right lender match.</p></div>
+      <div class="service-card reveal" style="transition-delay:.2s"><div class="service-num">03</div><div class="service-line"></div><h3>Personal Loan</h3><p>Whether it's a life goal, an unexpected expense, or a planned project, we help you access personal finance that fits your needs and budget.</p></div>
+      <div class="service-card reveal" style="transition-delay:.3s"><div class="service-num">04</div><div class="service-line"></div><h3>Vehicle Loan</h3><p>Drive away sooner with competitive vehicle finance options for new and used cars, tailored to your circumstances and structured to suit your cash flow.</p></div>
+      <div class="service-card reveal" style="transition-delay:.4s"><div class="service-num">05</div><div class="service-line"></div><h3>Asset Finance</h3><p>Grow your business with the right equipment and asset finance solutions — structured to protect your working capital and support long-term growth.</p></div>
+      <div class="service-card reveal" style="transition-delay:.5s"><div class="service-num">06</div><div class="service-line"></div><h3>Professional Customer Service</h3><p>Beyond products, we pride ourselves on genuine care. Every client receives responsive, personalised service from a dedicated advisor who knows your story.</p></div>
+    </div>
+  </section>
+
+  <!-- MORTGAGE CALCULATOR -->
+  <section class="calculator" id="calculator">
+    <div class="calc-wrap">
+
+      <!-- Left: inputs -->
+      <div class="reveal">
+        <p class="section-label">Tools</p>
+        <h2 class="section-heading">Mortgage<br><em>Calculator</em></h2>
+        <p style="color:var(--mid);font-size:.95rem;margin-top:1rem;margin-bottom:2.5rem;max-width:380px;">Estimate your repayments in seconds. Adjust the sliders to match your loan details.</p>
+
+        <div class="calc-box">
+          <div class="calc-tabs">
+            <button class="calc-tab active" onclick="setType('principal')" id="tab-principal">Principal &amp; Interest</button>
+            <button class="calc-tab" onclick="setType('interest')" id="tab-interest">Interest Only</button>
+          </div>
+
+          <div class="calc-field">
+            <label>Loan Amount <span id="lbl-amount">$500,000</span></label>
+            <input type="range" id="r-amount" min="50000" max="3000000" step="10000" value="500000" oninput="updateCalc()" />
+          </div>
+
+          <div class="calc-field">
+            <label>Interest Rate (p.a.) <span id="lbl-rate">5.50%</span></label>
+            <input type="range" id="r-rate" min="1" max="15" step="0.05" value="5.5" oninput="updateCalc()" />
+          </div>
+
+          <div class="calc-field">
+            <label>Loan Term <span id="lbl-term">30 years</span></label>
+            <input type="range" id="r-term" min="1" max="30" step="1" value="30" oninput="updateCalc()" />
+          </div>
+
+          <div class="calc-field">
+            <label style="display:block;margin-bottom:.5rem">Repayment Frequency</label>
+            <select id="s-freq" onchange="updateCalc()">
+              <option value="12">Monthly</option>
+              <option value="26">Fortnightly</option>
+              <option value="52">Weekly</option>
+            </select>
+          </div>
+
+          <div class="calc-field" style="margin-top:1.4rem">
+            <label style="display:block;margin-bottom:.5rem">Extra Repayments (per period)</label>
+            <input type="number" id="n-extra" value="0" min="0" step="100" oninput="updateCalc()" placeholder="0" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: results -->
+      <div class="calc-result reveal" style="transition-delay:.15s">
+        <h3>Your Estimated Repayment</h3>
+
+        <div class="result-main">
+          <div class="label">Repayment per period</div>
+          <div class="amount" id="res-payment">$2,839</div>
+          <div class="freq" id="res-freq">Monthly</div>
+        </div>
+
+        <!-- Doughnut -->
+        <div class="chart-wrap">
+          <svg width="140" height="140" viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="20"/>
+            <circle id="arc-principal" cx="70" cy="70" r="54" fill="none" stroke="#c9e4d1" stroke-width="20" stroke-dasharray="339.3 339.3" stroke-linecap="butt"/>
+            <circle id="arc-interest" cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="20" stroke-dasharray="0 339.3" stroke-linecap="butt"/>
+          </svg>
+          <div class="chart-center">
+            <div class="pct" id="chart-pct">50%</div>
+            <div class="sub">Principal</div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#c9e4d1"></div>Principal</div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,.3)"></div>Interest</div>
+        </div>
+
+        <div class="result-breakdown" style="margin-top:2rem">
+          <div class="result-row"><span class="r-label">Total Repayments</span><span class="r-val" id="res-total">$1,022,040</span></div>
+          <div class="result-row"><span class="r-label">Total Interest Paid</span><span class="r-val" id="res-interest">$522,040</span></div>
+          <div class="result-row"><span class="r-label">Loan Amount</span><span class="r-val" id="res-principal">$500,000</span></div>
+          <div class="result-row" id="savings-row" style="display:none"><span class="r-label">Interest Saved (extra repayments)</span><span class="r-val" id="res-savings" style="color:#c9e4d1">$0</span></div>
+        </div>
+
+        <div class="calc-cta">
+          <a href="#contact">Speak to an Advisor →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="reveal">
+        <p class="section-label">Client Stories</p>
+        <h2 class="section-heading">Trusted by<br>those who<br><em>matter most.</em></h2>
+        <p style="color:var(--mid);margin-top:1.4rem;font-size:.9rem;max-width:260px;">Real words from real clients who chose clarity over complexity.</p>
+      </div>
+      <div class="test-cards">
+        <div class="test-card reveal">
+          <blockquote>"ClearPath Financial Solutions made what felt like a complicated process incredibly simple. From the very beginning, they took the time to understand my situation and explained everything in plain language, without the usual industry jargon.</blockquote>
+          <blockquote style="margin-top:1rem;">"What stood out most was their genuine approach. They listened first, then built a strategy that aligned with my goals rather than pushing a one-size-fits-all solution. I refinanced my home loan and ended up in a much better position financially, with complete clarity on what I was signing up for.</blockquote>
+          <blockquote style="margin-top:1rem;">"Their professionalism, responsiveness, and attention to detail gave me confidence every step of the way. I wouldn't hesitate to recommend ClearPath to anyone looking for honest advice and tailored financial solutions."</blockquote>
+          <div class="test-author" style="margin-top:1.4rem">
+            <div class="test-avatar">SC</div>
+            <div><div class="test-name">Sathyan Chandrasekher</div><div class="test-role">Finance Controller, Sydney</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-heading">Let's start your<br><em>clear path</em><br>forward.</h2>
+        <p class="contact-info-text">No obligation, no jargon. Just an honest conversation about where you are and where you want to be.</p>
+        <div class="contact-details">
+          <div class="contact-detail"><div class="contact-detail-icon">✉</div><div class="contact-detail-text"><strong>Email</strong><span>enquiry@clearpathfinancialsolution.com.au</span></div></div>
+          <div class="contact-detail"><div class="contact-detail-icon">☎</div><div class="contact-detail-text"><strong>Phone</strong><span>+61 0411 318 853</span></div></div>
+          <div class="contact-detail"><div class="contact-detail-icon">⊙</div><div class="contact-detail-text"><strong>Website</strong><span><a href="http://clearpathfinancialsolution.com.au" target="_blank" style="color:var(--deep);text-decoration:underline;text-underline-offset:3px;">clearpathfinancialsolution.com.au</a></span></div></div>
+          <div class="contact-detail"><div class="contact-detail-icon">◷</div><div class="contact-detail-text"><strong>Hours</strong><span>Mon – Fri, 8:30 am – 5:30 pm AEST</span></div></div>
+        </div>
+      </div>
+      <form class="contact-form reveal" style="transition-delay:.15s" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="field"><label for="fname">First Name</label><input type="text" id="fname" placeholder="Jane" required /></div>
+          <div class="field"><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Smith" required /></div>
+        </div>
+        <div class="field"><label for="email">Email Address</label><input type="email" id="email" placeholder="jane@example.com" required /></div>
+        <div class="field"><label for="phone">Phone (optional)</label><input type="tel" id="phone" placeholder="+61 400 000 000" /></div>
+        <div class="field">
+          <label for="service">I'm interested in</label>
+          <select id="service">
+            <option value="" disabled selected>Select a service…</option>
+            <option>Refinancing</option><option>Home Loan</option>
+            <option>Personal Loan</option><option>Vehicle Loan</option>
+            <option>Asset Finance</option><option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="field"><label for="message">Message</label><textarea id="message" placeholder="Tell us a little about your situation and goals…"></textarea></div>
+        <div class="form-submit">
+          <button type="submit" class="btn-submit">Send Message →</button>
+          <span class="form-note">We'll respond within one business day.</span>
+        </div>
+        <div id="form-success" style="display:none;margin-top:1rem;color:var(--deep);font-size:.9rem;font-family:var(--serif);font-style:italic;">Thank you — we'll be in touch shortly.</div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo"><img src="data:image/png;base64,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" alt="ClearPath Financial Solutions" /></div>
+    <p>© 2026 ClearPath Financial Solutions Pty Ltd. AFSL 000000. General advice only.</p>
+    <ul class="footer-links">
+      <li><a href="#">Privacy</a></li><li><a href="#">FSG</a></li><li><a href="#">Disclaimer</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Form
+    function handleSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('fname').value + ' ' + document.getElementById('lname').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const service = document.getElementById('service').value;
+      const message = document.getElementById('message').value;
+      const subject = encodeURIComponent('Enquiry from ' + name + (service ? ' – ' + service : ''));
+      const body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        'Phone: ' + (phone || 'Not provided') + '\n' +
+        'Service: ' + (service || 'Not specified') + '\n\n' +
+        'Message:\n' + message
+      );
+      window.location.href = 'mailto:enquiry@clearpathfinancialsolution.com.au?subject=' + subject + '&body=' + body;
+      document.getElementById('form-success').style.display = 'block';
+      e.target.reset();
+    }
+
+    // Calc state
+    let loanType = 'principal';
+    function setType(t) {
+      loanType = t;
+      document.getElementById('tab-principal').classList.toggle('active', t === 'principal');
+      document.getElementById('tab-interest').classList.toggle('active', t === 'interest');
+      updateCalc();
+    }
+
+    function fmt(n) {
+      return '$' + Math.round(n).toLocaleString('en-AU');
+    }
+
+    function updateCalc() {
+      const P = parseFloat(document.getElementById('r-amount').value);
+      const annualRate = parseFloat(document.getElementById('r-rate').value);
+      const years = parseInt(document.getElementById('r-term').value);
+      const freq = parseInt(document.getElementById('s-freq').value);
+      const extra = parseFloat(document.getElementById('n-extra').value) || 0;
+
+      // Labels
+      document.getElementById('lbl-amount').textContent = fmt(P);
+      document.getElementById('lbl-rate').textContent = annualRate.toFixed(2) + '%';
+      document.getElementById('lbl-term').textContent = years + ' year' + (years > 1 ? 's' : '');
+      const freqLabel = freq === 12 ? 'Monthly' : freq === 26 ? 'Fortnightly' : 'Weekly';
+      document.getElementById('res-freq').textContent = freqLabel;
+
+      const r = annualRate / 100 / freq;
+      const n = years * freq;
+
+      let payment, totalPaid, totalInterest;
+
+      if (loanType === 'interest') {
+        payment = P * r;
+        totalPaid = payment * n;
+        totalInterest = totalPaid;
+      } else {
+        if (r === 0) {
+          payment = P / n;
+        } else {
+          payment = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+        }
+        totalPaid = payment * n;
+        totalInterest = totalPaid - P;
+      }
+
+      // Extra repayments savings (PI only)
+      let savedInterest = 0;
+      if (extra > 0 && loanType === 'principal' && r > 0) {
+        let bal = P, bal2 = P, periods = 0, periods2 = 0;
+        let interest1 = 0, interest2 = 0;
+        for (let i = 0; i < n * 3; i++) {
+          if (bal <= 0) break;
+          const iAmt = bal * r;
+          interest1 += iAmt;
+          bal = bal + iAmt - payment;
+          periods++;
+        }
+        for (let i = 0; i < n * 3; i++) {
+          if (bal2 <= 0) break;
+          const iAmt = bal2 * r;
+          interest2 += iAmt;
+          bal2 = bal2 + iAmt - (payment + extra);
+          periods2++;
+        }
+        savedInterest = Math.max(0, interest1 - interest2);
+      }
+
+      document.getElementById('res-payment').textContent = fmt(payment);
+      document.getElementById('res-total').textContent = fmt(totalPaid);
+      document.getElementById('res-interest').textContent = fmt(totalInterest);
+      document.getElementById('res-principal').textContent = fmt(P);
+
+      const savingsRow = document.getElementById('savings-row');
+      if (savedInterest > 0) {
+        savingsRow.style.display = 'flex';
+        document.getElementById('res-savings').textContent = fmt(savedInterest);
+      } else {
+        savingsRow.style.display = 'none';
+      }
+
+      // Doughnut
+      const CIRC = 2 * Math.PI * 54;
+      const principalFrac = loanType === 'interest' ? 0 : (P / totalPaid);
+      const principalDash = principalFrac * CIRC;
+      const interestDash = CIRC - principalDash;
+
+      document.getElementById('arc-principal').setAttribute('stroke-dasharray', principalDash + ' ' + CIRC);
+      document.getElementById('arc-interest').setAttribute('stroke-dasharray', interestDash + ' ' + CIRC);
+      document.getElementById('arc-interest').setAttribute('stroke-dashoffset', -principalDash);
+      document.getElementById('chart-pct').textContent = Math.round(principalFrac * 100) + '%';
+    }
+
+    updateCalc();
+  </script>
+
+</body>
+</html>
